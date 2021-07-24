@@ -1,0 +1,37 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: python-res-service
+spec:
+  selector:
+    app: python-res-service
+  ports:
+  - protocol: "TCP"
+    port: 9000
+    targetPort: 9000
+    nodePort: 32101
+    #  type: LoadBalancer
+  type: NodePort
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: python-res-service
+spec:
+  selector:
+    matchLabels:
+      app: python-res-service
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: python-res-service
+    spec:
+            #hostNetwork: true      
+      containers:
+      - name: python-res-service
+        image: vu2hsj/pythondemotest:v1
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 9000
+

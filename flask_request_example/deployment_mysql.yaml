@@ -1,0 +1,37 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-service
+spec:
+  selector:
+    app: mysql-service
+  ports:
+  - protocol: "TCP"
+    port: 3306
+    targetPort: 3306
+    nodePort: 31341
+    #  type: LoadBalancer
+  type: NodePort
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql-service
+spec:
+  selector:
+    matchLabels:
+      app: mysql-service
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: mysql-service
+    spec:
+            #hostNetwork: true      
+      containers:
+      - name: mysql-service
+        image: vu2hsj/kafka_sql_flask:v16
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8000
+

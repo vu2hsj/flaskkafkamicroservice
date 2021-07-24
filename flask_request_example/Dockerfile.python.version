@@ -1,0 +1,48 @@
+FROM ubuntu:18.04
+
+#RUN apt-get update
+#RUN apt-get install -y build-essential
+# This will install Python, pip, pip3, and pip3.6.
+
+#RUN curl https://bootstrap.pypa.io/ez_setup.py -o - | python3.6 && python3.6 -m easy_install pip
+#RUN apt-get update
+#RUN apt-get install -y python3.6-venv
+
+# Inorder to run pip3.6, run it the following way `python3.6 -m pip`
+# Update Python & Install wheel
+#RUN python3.6 -m pip install pip --upgrade
+#RUN python3.6 -m pip install wheel
+#RUN apt-get update
+#RUN  apt-get install software-properties-common -y
+
+#RUN add-apt-repository ppa:jonathonf/python-3.6 -y
+#RUN apt-get update
+#RUN apt-get install python3.6 libpython3.6 -y
+#RUN  update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.5 2
+#RUN update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.6 1
+
+#sudo rm /usr/bin/python3
+
+
+RUN apt-get update -y
+RUN apt-get install telnet -y
+RUN apt install vim -y  
+RUN apt-get install python -y
+RUN  apt update &&  apt install python3-pip -y
+
+COPY .  /flask_project
+WORKDIR /flask_project
+#RUN pip install -r requirements.txt
+#RUN add-apt-repository ppa:jonathonf/vim && sudo apt update && sudo apt install vim
+
+
+RUN pip3 install flask
+RUN pip3 install kafka-python
+RUN pip3 install mysql-connector
+#RUN apt install --assume-yes vim
+#RUN pip install telnetd -y
+
+#EXPOSE  8000
+EXPOSE 8000
+CMD ["python3", "app.py"]
+
